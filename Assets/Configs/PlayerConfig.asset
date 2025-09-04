@@ -15,3 +15,4 @@ MonoBehaviour:
   PlayerModel:
     MoveSpeed: 3
     RotationSpeed: 360
+  InventoryConfig: {fileID: 11400000, guid: c799543dc96c11e4081ef97fd52e1e0d, type: 2}

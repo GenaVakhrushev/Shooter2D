@@ -1,7 +1,6 @@
 ﻿using DI.Installers;
-using Shooter.Configs;
+using Shooter.Player;
 using Shooter.Services;
-using Shooter.Views;
 using UnityEngine;
 
 namespace Shooter.Installers

@@ -1,8 +1,6 @@
 ﻿using DI;
 using DI.Attributes;
-using Shooter.Configs;
-using Shooter.Controllers;
-using Shooter.Views;
+using Shooter.Player;
 using UnityEngine;
 
 namespace Shooter.Services
@@ -13,6 +11,7 @@ namespace Shooter.Services
         private readonly Transform spawnPoint;
         
         [Inject] private DIContainer container;
+        [Inject] private ShooterInputActions inputActions;
 
         public PlayerService(PlayerConfig config, Transform spawnPoint)
         {
@@ -30,9 +29,8 @@ namespace Shooter.Services
         public PlayerView SpawnPlayerView()
         {
             var view = container.Instantiate(ViewPrefab);
-            var controller = new PlayerController();
+            var controller = new PlayerController(inputActions, config.InventoryConfig);
             
-            container.Inject(controller);
             controller.SetView(view);
             controller.SetModel(config.PlayerModel);
 

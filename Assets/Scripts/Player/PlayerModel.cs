@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Shooter.Models
+namespace Shooter.Player
 {
     [Serializable]
     public class PlayerModel

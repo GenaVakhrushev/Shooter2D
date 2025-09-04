@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceac11b48b7d4cbdbad2cff0333a8c63, type: 3}
+  m_Name: Shotgun ItemConfig
+  m_EditorClassIdentifier: Shooter::Shooter.Inventory.Items.ItemConfig
+  ViewPrefab: {fileID: -6202640575617964798, guid: 64bcfb3624b856a4e809eb9b48beaa7d, type: 3}
+  obj:
+    rid: 2884125747995476246
+  references:
+    version: 2
+    RefIds:
+    - rid: 2884125747995476246
+      type: {class: Shotgun, ns: Shooter.Inventory.Items.Weapons.ShootWeapons, asm: Shooter}
+      data:
+        damage: 1
+        bulletsCount: 5
+        spreadAngle: 30

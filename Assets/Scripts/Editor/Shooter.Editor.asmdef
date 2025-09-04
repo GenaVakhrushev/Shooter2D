@@ -1,0 +1,18 @@
+{
+    "name": "Shooter.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0cb20d84a3408eb449a5bfbf2371fa66"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
