@@ -15,7 +15,7 @@ namespace Shooter.Inventory.Core
                 return null;
             }
 
-            return slots[slotIndex].ItemConfig;
+            return slots[slotIndex].GetItemConfig();
         }
 
         public void AddSlot(InventorySlot slot)

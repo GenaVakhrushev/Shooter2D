@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Shooter.Controllers;
-using Shooter.Inventory;
+﻿using Shooter.Controllers;
 using Shooter.Inventory.Core;
 using Shooter.Inventory.Hand;
-using Shooter.Inventory.Slots;
 using Shooter.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,13 +22,9 @@ namespace Shooter.Player
             
             inventoryController = new InventoryController();
             inventoryController.SetModel(new InventoryModel());
-            foreach (var slotConfig in inventoryConfig.SlotConfigs)
+            foreach (var slot in inventoryConfig.Slots)
             {
-                inventoryController.AddSlot(slotConfig);
-            }
-            foreach (var itemConfig in inventoryConfig.InitialItems)
-            {
-                inventoryController.AddItem(itemConfig);
+                inventoryController.AddSlot(slot);
             }
             
             handController = new HandController();

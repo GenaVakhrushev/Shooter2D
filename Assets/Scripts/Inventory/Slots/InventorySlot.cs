@@ -1,24 +1,30 @@
-﻿using Shooter.Inventory.Items;
+﻿using System;
+using Shooter.Inventory.Items;
+using UnityEngine;
 
 namespace Shooter.Inventory.Slots
 {
+    [Serializable]
     public class InventorySlot
     {
-        public ItemConfig ItemConfig { get; private set; }
+        [SerializeField] private ItemConfig itemConfig;
 
-        public bool TryPutItem(ItemConfig itemConfig)
+        public ItemConfig GetItemConfig() => itemConfig;
+        
+        public bool TryPutItem(ItemConfig itemConfigToPut)
         {
-            if (CanPutItem(itemConfig))
+            if (CanPutItem(itemConfigToPut))
             {
-                PutItem(itemConfig);
+                PutItem(itemConfigToPut);
                 return true;
             }
 
             return false;
         }
-        public virtual void PutItem(ItemConfig itemConfig) => ItemConfig = itemConfig;
         
-        public virtual bool CanPutItem(ItemConfig itemConfig) => ItemConfig == null;
+        public void PutItem(ItemConfig itemConfigToPut) => itemConfig = itemConfigToPut;
+        
+        public bool CanPutItem(ItemConfig itemConfigToPut) => itemConfig == null;
         
     }
 }

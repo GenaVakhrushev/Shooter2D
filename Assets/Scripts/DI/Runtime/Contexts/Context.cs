@@ -20,6 +20,11 @@ namespace DI.Contexts
         {
             foreach (var monoInstaller in monoInstallers)
             {
+                if (monoInstaller == null)
+                {
+                    Debug.LogError($"Null installer in context: {this}");
+                }
+                
                 monoInstaller.Initialize(Container);
                 monoInstaller.InstallBindings();
             }

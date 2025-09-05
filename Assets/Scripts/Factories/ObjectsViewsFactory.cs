@@ -20,9 +20,15 @@ namespace Shooter.Factories
 
         private ObjectPool<ObjectView> GetOrCreatePool(ObjectConfig config)
         {
-            return pools.TryGetValue(config, out var pool)
-                ? pool
-                : new ObjectPool<ObjectView>(CreateObjectView, ActionOnGetObjectView, ActionOnReleaseObjectView);
+            if (pools.TryGetValue(config, out var pool))
+            {
+                return pool;
+            }
+            
+            pool = new ObjectPool<ObjectView>(CreateObjectView, ActionOnGetObjectView, ActionOnReleaseObjectView);
+            pools.Add(config, pool);
+
+            return pool;
 
             ObjectView CreateObjectView()
             {
