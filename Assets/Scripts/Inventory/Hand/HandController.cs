@@ -25,6 +25,16 @@ namespace Shooter.Inventory.Hand
             }
         }
 
+        public void UseItem()
+        {
+            var heldItemConfig = GetHeldItemConfig();
+
+            if (heldItemConfig)
+            {
+                heldItemConfig.Object.Use();
+            }
+        }
+        
         public ItemConfig GetHeldItemConfig() => Model.HeldItemConfig;
         
         public void TakeItem(ItemConfig itemConfig) => Model.SetItemConfig(itemConfig);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceac11b48b7d4cbdbad2cff0333a8c63, type: 3}
   m_Name: Shotgun ItemConfig
   m_EditorClassIdentifier: Shooter::Shooter.Inventory.Items.ItemConfig
-  ViewPrefab: {fileID: -6202640575617964798, guid: 64bcfb3624b856a4e809eb9b48beaa7d, type: 3}
+  ViewPrefab: {fileID: 3586261499291546947, guid: 64bcfb3624b856a4e809eb9b48beaa7d, type: 3}
   obj:
     rid: 2884125747995476246
   references:
@@ -22,5 +22,7 @@ MonoBehaviour:
       type: {class: Shotgun, ns: Shooter.Inventory.Items.Weapons.ShootWeapons, asm: Shooter}
       data:
         damage: 1
+        bulletConfig: {fileID: 11400000, guid: 731e8331056f8794caddd69556089282, type: 2}
+        bulletLaunchSpeed: 3
         bulletsCount: 5
         spreadAngle: 30

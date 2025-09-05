@@ -35,6 +35,8 @@ namespace Shooter.Player
             inputActions.Inventory.Slot1.performed += Slot1_OnPerformed;
             inputActions.Inventory.Slot2.performed += Slot2_OnPerformed;
             inputActions.Inventory.Slot3.performed += Slot3_OnPerformed;
+            
+            inputActions.Player.Use.performed += Use_OnPerformed;
         }
 
         public override void SetView(PlayerView view)
@@ -50,13 +52,18 @@ namespace Shooter.Player
             HandleMovement();
             HandleLooking();
         }
-        
+
         private void Slot1_OnPerformed(InputAction.CallbackContext context) => SelectSlot(0);
 
         private void Slot2_OnPerformed(InputAction.CallbackContext context) => SelectSlot(1);
 
         private void Slot3_OnPerformed(InputAction.CallbackContext context) => SelectSlot(2);
-        
+
+        private void Use_OnPerformed(InputAction.CallbackContext context)
+        {
+            handController.UseItem();
+        }
+
         private void HandleMovement()
         {
             var action = inputActions.Player.Move;

@@ -6,10 +6,17 @@ namespace Shooter.Inventory.Items.Weapons.ShootWeapons
     {
         [SerializeField] private int bulletsCount = 5;
         [SerializeField] private float spreadAngle = 30;
-        
-        protected override void Shoot()
+
+        public override void Use()
         {
-            Debug.Log("Shotgun shoot");
+            var halfSpreadAngle = spreadAngle / 2;
+
+            for (var i = 0; i < bulletsCount; i++)
+            {
+                var angle = Random.Range(-halfSpreadAngle, halfSpreadAngle);
+                
+                Shoot(angle);
+            }
         }
     }
 }

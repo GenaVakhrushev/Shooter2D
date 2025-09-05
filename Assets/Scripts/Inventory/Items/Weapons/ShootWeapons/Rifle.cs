@@ -4,9 +4,9 @@ namespace Shooter.Inventory.Items.Weapons.ShootWeapons
 {
     public class Rifle : ShootWeapon
     {
-        protected override void Shoot()
+        public override void Use()
         {
-            Debug.Log("Rifle shoot");
+            Shoot();
         }
     }
 }

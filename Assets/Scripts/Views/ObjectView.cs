@@ -6,7 +6,7 @@ namespace Shooter.Views
     {
         public ObjectConfig ObjectConfig { get; private set; }
 
-        public void SetObjectConfig(ObjectConfig objectConfig)
+        public virtual void SetObjectConfig(ObjectConfig objectConfig)
         {
             ObjectConfig = objectConfig;
         }
