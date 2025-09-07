@@ -1,6 +1,6 @@
-﻿using System;
-using DI.Attributes;
+﻿using DI.Attributes;
 using Shooter.Factories;
+using Shooter.Utils;
 using Shooter.Views;
 using UnityEngine;
 
@@ -16,6 +16,14 @@ namespace Shooter.Damage.Bullets
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+        }
+
+        private void Update()
+        {
+            if (!ScreenArea.InScreenArea(transform.position))
+            {
+                viewsFactory.ReturnView(this);
+            }
         }
 
         public void Launch(Vector2 directionNormalized, float speed)
