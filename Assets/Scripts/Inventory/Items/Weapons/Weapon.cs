@@ -1,13 +1,12 @@
-﻿using System;
-using UnityEngine;
-
-namespace Shooter.Inventory.Items.Weapons
+﻿namespace Shooter.Inventory.Items.Weapons
 {
-    [Serializable]
-    public abstract class Weapon : IItem
+    public abstract class Weapon : Item
     {
-        [SerializeField] private float damage = 1;
-        
-        public abstract void Use();
+        private float damage;
+
+        protected Weapon(string name, float damage) : base(name)
+        {
+            this.damage = damage;
+        }
     }
 }

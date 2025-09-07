@@ -1,11 +1,18 @@
-﻿using UnityEngine;
+﻿using Shooter.Damage.Bullets;
+using UnityEngine;
 
 namespace Shooter.Inventory.Items.Weapons.ShootWeapons
 {
     public class Shotgun : ShootWeapon
     {
-        [SerializeField] private int bulletsCount = 5;
-        [SerializeField] private float spreadAngle = 30;
+        private int bulletsCount;
+        private float spreadAngle;
+
+        public Shotgun(string name, float damage, BulletConfig bulletConfig, float bulletLaunchSpeed, int bulletsCount, float spreadAngle) : base(name, damage, bulletConfig, bulletLaunchSpeed)
+        {
+            this.bulletsCount = bulletsCount;
+            this.spreadAngle = spreadAngle;
+        }
 
         public override void Use()
         {

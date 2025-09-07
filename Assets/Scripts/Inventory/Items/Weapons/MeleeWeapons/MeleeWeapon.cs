@@ -1,15 +1,20 @@
 ﻿using Unity.Plastic.Newtonsoft.Json.Serialization;
-using UnityEngine;
 
 namespace Shooter.Inventory.Items.Weapons.MeleeWeapons
 {
     public abstract class MeleeWeapon : Weapon
     {
-        [SerializeField] private float hitDistance;
-        [SerializeField] private float range;
+        private float hitDistance;
+        private float range;
 
         public event Action Striked;
-        
+
+        protected MeleeWeapon(string name, float damage, float hitDistance, float range) : base(name, damage)
+        {
+            this.hitDistance = hitDistance;
+            this.range = range;
+        }
+
         public override void Use()
         {
             Strike();

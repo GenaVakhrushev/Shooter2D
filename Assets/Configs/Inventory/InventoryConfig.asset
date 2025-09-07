@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4ff22a7f7d47569cbd89b2ceb33281, type: 3}
   m_Name: InventoryConfig
   m_EditorClassIdentifier: Shooter::Shooter.Inventory.Core.InventoryConfig
-  Slots:
-  - itemConfig: {fileID: 11400000, guid: 5a9be95cdac4b5a45b6e5df979e13365, type: 2}
-  - itemConfig: {fileID: 11400000, guid: c051b50c14861b14ebade8791fa32d48, type: 2}
-  - itemConfig: {fileID: 0}
+  SlotConfigs:
+  - {fileID: 11400000, guid: d0f11d5db6d191f4a9d53c25a97d39f2, type: 2}
+  - {fileID: 11400000, guid: 60d538608155b0c41b73ceedf8780d32, type: 2}
+  - {fileID: 11400000, guid: 4ab53e5514933504bb65677bbacc33a6, type: 2}

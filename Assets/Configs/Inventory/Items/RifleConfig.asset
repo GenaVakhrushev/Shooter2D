@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b9fdadf5414ac9b8e9ed056aca4a20, type: 3}
+  m_Name: RifleConfig
+  m_EditorClassIdentifier: Shooter::Shooter.Inventory.Items.Weapons.ShootWeapons.RifleConfig
+  ItemName: Rifle
+  ItemView: {fileID: 1217084972825689229, guid: cdd97325121f12e46a6693fbe16878ab, type: 3}
+  Damage: 5
+  BulletConfig: {fileID: 11400000, guid: a5d023f37706a3249a618b1ed2bd2bf7, type: 2}
+  BulletLaunchSpeed: 10

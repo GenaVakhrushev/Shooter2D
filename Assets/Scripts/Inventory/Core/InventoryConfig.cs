@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Shooter.Inventory.Core
 {
-    [CreateAssetMenu(fileName = nameof(InventoryConfig), menuName = "Configs/" +nameof(InventoryConfig), order = 0)]
+    [CreateAssetMenu(fileName = nameof(InventoryConfig), menuName = "Configs/Inventory/" + nameof(InventoryConfig), order = 0)]
     public class InventoryConfig : ScriptableObject
     {
-        public InventorySlot[] Slots;
+        public InventorySlotConfig[] SlotConfigs;
     }
 }

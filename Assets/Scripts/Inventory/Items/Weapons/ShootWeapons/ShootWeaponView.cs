@@ -2,7 +2,6 @@
 using Shooter.Damage.Bullets;
 using Shooter.Factories;
 using Shooter.Utils;
-using TopDownShooter.Configs;
 using UnityEngine;
 
 namespace Shooter.Inventory.Items.Weapons.ShootWeapons
@@ -11,19 +10,19 @@ namespace Shooter.Inventory.Items.Weapons.ShootWeapons
     {
         [SerializeField] private Transform launchPoint;
         
-        [Inject] private ObjectsViewsFactory viewsFactory;
+        [Inject] private BulletsFactory bulletsFactory;
         
         private ShootWeapon shootWeapon;
         
-        public override void SetObjectConfig(ObjectConfig objectConfig)
+        public override void SetItem(Item item)
         {
             if (shootWeapon != null)
             {
                 shootWeapon.Shot -= ShootWeapon_OnShot;
             }
-            base.SetObjectConfig(objectConfig);
-
-            shootWeapon = objectConfig.GetObject() as ShootWeapon;
+            
+            base.SetItem(item);
+            shootWeapon = Item as ShootWeapon;
 
             if (shootWeapon != null)
             {
@@ -33,7 +32,9 @@ namespace Shooter.Inventory.Items.Weapons.ShootWeapons
 
         private void ShootWeapon_OnShot(float angle)
         {
-            var bulletView = (BulletView)viewsFactory.GetView(shootWeapon.GetConfig());
+            var bulletConfig = shootWeapon.GetConfig();
+            var bullet = new Bullet(bulletConfig.BulletName);
+            var bulletView = bulletsFactory.GetBulletView(bullet);
             var direction = ((Vector2)launchPoint.up).Rotate(angle);
 
             var bulletViewTransform = bulletView.transform;

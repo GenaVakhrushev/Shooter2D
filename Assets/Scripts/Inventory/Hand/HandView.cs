@@ -10,7 +10,7 @@ namespace Shooter.Inventory.Hand
     {
         [SerializeField] private Transform itemParent;
 
-        [Inject] private ObjectsViewsFactory factory;
+        [Inject] private ItemsFactory itemsFactory;
         
         private HandModel model;
         private ItemView currentItemView;
@@ -19,31 +19,31 @@ namespace Shooter.Inventory.Hand
         {
             if (model != null)
             {
-                model.ItemConfigChanged -= Model_OnItemConfigChanged;
+                model.ItemChanged -= ModelOnItemChanged;
             }
             
             model = newModel;
             
             if (model != null)
             {
-                model.ItemConfigChanged += Model_OnItemConfigChanged;
+                model.ItemChanged += ModelOnItemChanged;
             }
         }
 
-        private void Model_OnItemConfigChanged(ItemConfig itemConfig)
+        private void ModelOnItemChanged(Item item)
         {
             if (currentItemView != null)
             {
-                factory.ReturnView(currentItemView);
+                itemsFactory.ReturnView(currentItemView);
             }
 
-            if (itemConfig == null)
+            if (item == null)
             {
                 currentItemView = null;
                 return;
             }
             
-            currentItemView = (ItemView)factory.GetView(itemConfig);
+            currentItemView = itemsFactory.GetItemView(item);
             var viewTransform = currentItemView.transform;
 
             viewTransform.parent = itemParent;

@@ -1,11 +1,12 @@
-﻿using TopDownShooter.Configs;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Shooter.Inventory.Items
 {
-    [CreateAssetMenu(fileName = nameof(ItemConfig), menuName = "Configs/" + nameof(ItemConfig), order = 0)]
-    public class ItemConfig : ObjectConfig<IItem>
+    public abstract class ItemConfig : ScriptableObject
     {
-        
+        public string ItemName;
+        public ItemView ItemView;
+
+        public abstract Item CreateItem();
     }
 }

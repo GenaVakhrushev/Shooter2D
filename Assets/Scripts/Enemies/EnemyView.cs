@@ -2,7 +2,7 @@
 
 namespace Shooter.Enemies
 {
-    public class EnemyView : ObjectView
+    public class EnemyView : View
     {
         
     }

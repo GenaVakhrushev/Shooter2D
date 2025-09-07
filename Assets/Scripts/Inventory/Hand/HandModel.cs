@@ -5,20 +5,20 @@ namespace Shooter.Inventory.Hand
 {
     public class HandModel
     {
-        public event Action<ItemConfig> ItemConfigChanged;
+        public event Action<Item> ItemChanged;
         
-        public ItemConfig HeldItemConfig { get; private set; }
+        public Item HeldItem { get; private set; }
 
-        public void SetItemConfig(ItemConfig itemConfig)
+        public void SetItem(Item item)
         {
-            HeldItemConfig = itemConfig;
+            HeldItem = item;
             
-            ItemConfigChanged?.Invoke(HeldItemConfig);
+            ItemChanged?.Invoke(HeldItem);
         }
 
         public void ResetItem()
         {
-            SetItemConfig(null);
+            SetItem(null);
         }
     }
 }

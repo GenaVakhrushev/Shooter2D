@@ -6,7 +6,7 @@ namespace Shooter.Inventory.Core
 {
     public class InventoryController : Controller<InventoryModel, InventoryView>
     {
-        public ItemConfig GetItemConfig(int slotIndex)
+        public Item GetItem(int slotIndex)
         {
             var slots = Model.Slots;
 
@@ -15,7 +15,7 @@ namespace Shooter.Inventory.Core
                 return null;
             }
 
-            return slots[slotIndex].GetItemConfig();
+            return slots[slotIndex].Item;
         }
 
         public void AddSlot(InventorySlot slot)
@@ -23,11 +23,11 @@ namespace Shooter.Inventory.Core
             Model.Slots.Add(slot);
         }
 
-        public void AddItem(ItemConfig itemConfig)
+        public void AddItem(Item item)
         {
             foreach (var slotConfig in Model.Slots)
             {
-                if (slotConfig.TryPutItem(itemConfig))
+                if (slotConfig.TryPutItem(item))
                 {
                     return;
                 }

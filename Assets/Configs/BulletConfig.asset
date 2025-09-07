@@ -12,12 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20084522afd414881e1853dd6c80093, type: 3}
   m_Name: BulletConfig
   m_EditorClassIdentifier: Shooter::Shooter.Damage.Bullets.BulletConfig
-  ViewPrefab: {fileID: 4631532831012855124, guid: fe2514561cc39154499e9abaedb66973, type: 3}
-  obj:
-    rid: 2884125770844209236
-  references:
-    version: 2
-    RefIds:
-    - rid: 2884125770844209236
-      type: {class: Bullet, ns: Shooter.Damage.Bullets, asm: Shooter}
-      data: 
+  BulletName: Bullet
+  BulletView: {fileID: 4631532831012855124, guid: fe2514561cc39154499e9abaedb66973, type: 3}

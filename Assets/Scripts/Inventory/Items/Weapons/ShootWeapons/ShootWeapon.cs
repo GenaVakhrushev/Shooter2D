@@ -1,14 +1,19 @@
 ﻿using System;
 using Shooter.Damage.Bullets;
-using UnityEngine;
 
 namespace Shooter.Inventory.Items.Weapons.ShootWeapons
 {
     public abstract class ShootWeapon : Weapon
     {
-        [SerializeField] private BulletConfig bulletConfig;
-        [SerializeField] private float bulletLaunchSpeed;
-        
+        private BulletConfig bulletConfig;
+        private float bulletLaunchSpeed;
+
+        protected ShootWeapon(string name, float damage, BulletConfig bulletConfig, float bulletLaunchSpeed) : base(name, damage)
+        {
+            this.bulletConfig = bulletConfig;
+            this.bulletLaunchSpeed = bulletLaunchSpeed;
+        }
+
         public event Action<float> Shot;
 
         public BulletConfig GetConfig() => bulletConfig;

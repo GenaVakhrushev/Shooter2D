@@ -7,12 +7,14 @@ using UnityEngine;
 namespace Shooter.Damage.Bullets
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class BulletView : ObjectView
+    public class BulletView : View
     {
-        [Inject] private ObjectsViewsFactory viewsFactory;
-        
+        public Bullet Bullet { get; private set; }
+
+        [Inject] private BulletsFactory bulletsFactory;
+
         private Rigidbody2D rb;
-        
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -22,8 +24,13 @@ namespace Shooter.Damage.Bullets
         {
             if (!ScreenArea.InScreenArea(transform.position))
             {
-                viewsFactory.ReturnView(this);
+                bulletsFactory.ReturnView(this);
             }
+        }
+
+        public virtual void SetBullet(Bullet bullet)
+        {
+            Bullet = bullet;
         }
 
         public void Launch(Vector2 directionNormalized, float speed)

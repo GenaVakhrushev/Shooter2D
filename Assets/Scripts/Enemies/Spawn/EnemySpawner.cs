@@ -12,17 +12,17 @@ namespace Shooter.Enemies.Spawn
     {
         [SerializeField] private EnemyConfig[] enemyConfigs;
 
-        [Inject] private ObjectsViewsFactory viewsFactory;
+        [Inject] private ItemsFactory viewsFactory;
 
         private Stack<IController> freeControllers = new();
         private Stack<IController> usingControllers = new();
         
         public void SpawnEnemy()
         {
-            var configIndex = Random.Range(0, enemyConfigs.Length);
-            var config = enemyConfigs[configIndex];
-            var view = viewsFactory.GetView(config);
-            var controller = (IController)Activator.CreateInstance(config.GetControllerType());
+            // var configIndex = Random.Range(0, enemyConfigs.Length);
+            // var config = enemyConfigs[configIndex];
+            // var view = viewsFactory.GetItemView(config);
+            // var controller = (IController)Activator.CreateInstance(config.GetControllerType());
         }
     }
 }

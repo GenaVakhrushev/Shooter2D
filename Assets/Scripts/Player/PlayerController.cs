@@ -1,6 +1,7 @@
 ﻿using Shooter.Controllers;
 using Shooter.Inventory.Core;
 using Shooter.Inventory.Hand;
+using Shooter.Inventory.Slots;
 using Shooter.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,8 +23,16 @@ namespace Shooter.Player
             
             inventoryController = new InventoryController();
             inventoryController.SetModel(new InventoryModel());
-            foreach (var slot in inventoryConfig.Slots)
+            foreach (var slotConfig in inventoryConfig.SlotConfigs)
             {
+                var slot = new InventorySlot();
+                var itemConfig = slotConfig.ItemConfig;
+
+                if (itemConfig != null)
+                {
+                    slot.PutItem(slotConfig.ItemConfig.CreateItem());
+                }
+                
                 inventoryController.AddSlot(slot);
             }
             
@@ -97,16 +106,16 @@ namespace Shooter.Player
         
         private void SelectSlot(int index)
         {
-            var itemConfig = inventoryController.GetItemConfig(index);
-            var currentItem = handController.GetHeldItemConfig();
+            var item = inventoryController.GetItem(index);
+            var currentItem = handController.GetHeldItem();
 
-            if (itemConfig == currentItem)
+            if (item == currentItem)
             {
                 handController.DropItem();
             }
             else
             {
-                handController.TakeItem(itemConfig);
+                handController.TakeItem(item);
             }
         }
     }

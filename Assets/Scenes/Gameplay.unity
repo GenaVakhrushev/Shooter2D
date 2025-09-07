@@ -148,6 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4be209cd0f944264a0170ab90dfb56c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Shooter::Shooter.Installers.ObjectsViewsFactoryInstaller
+  itemsDatabase: {fileID: 11400000, guid: e44c785b58651c54ea5b093901334237, type: 2}
+  bulletsDatabase: {fileID: 11400000, guid: 4ea04b5da54d41447891c34aa7235f7a, type: 2}
 --- !u!4 &377524928
 Transform:
   m_ObjectHideFlags: 0
