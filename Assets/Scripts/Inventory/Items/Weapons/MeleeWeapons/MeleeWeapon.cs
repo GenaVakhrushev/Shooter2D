@@ -4,13 +4,15 @@ namespace Shooter.Inventory.Items.Weapons.MeleeWeapons
 {
     public abstract class MeleeWeapon : Weapon
     {
-        private float range;
+        public float Range { get; private set; }
+        public float WaveSpeed { get; private set; }
         
         public event Action Striked;
 
-        protected MeleeWeapon(string name, float damage, float range) : base(name, damage)
+        protected MeleeWeapon(string name, float damage, float range, float waveSpeed) : base(name, damage)
         {
-            this.range = range;
+            Range = range;
+            WaveSpeed = waveSpeed;
         }
 
         public override void Use()

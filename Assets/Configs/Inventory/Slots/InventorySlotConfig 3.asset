@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955a303a80214b47b5d51617335571bd, type: 3}
   m_Name: InventorySlotConfig 3
   m_EditorClassIdentifier: Shooter::Shooter.Inventory.Slots.InventorySlotConfig
-  ItemConfig: {fileID: 0}
+  ItemConfig: {fileID: 11400000, guid: b2793f7731ef44c4f94f38cae81ec435, type: 2}

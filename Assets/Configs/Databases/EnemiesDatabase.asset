@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d63fa49d094a0d842e8f8e63f84db7, type: 3}
   m_Name: EnemiesDatabase
   m_EditorClassIdentifier: Shooter::Shooter.Databases.EnemiesDatabase
-  EnemyConfigs: []
+  EnemyConfigs:
+  - {fileID: 11400000, guid: d34868f52caf0924a8550c51b2378b75, type: 2}

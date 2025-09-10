@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b129df7d19d346f8b92319706dfdfb88, type: 3}
   m_Name: EnemyConfig
   m_EditorClassIdentifier: Shooter::Shooter.Enemies.EnemyConfig
-  EnemyName: 
-  MoveSpeed: 0
-  RotationSpeed: 0
-  AttackDistance: 0
-  AttackLookAngle: 0
-  AttacksPerSecond: 0
-  WeaponConfig: {fileID: 0}
-  EnemyView: {fileID: 0}
+  EnemyName: Melee
+  MoveSpeed: 1.5
+  RotationSpeed: 360
+  AttackDistance: 0.5
+  AttackLookAngle: 30
+  AttacksPerSecond: 1
+  WeaponConfig: {fileID: 11400000, guid: b2793f7731ef44c4f94f38cae81ec435, type: 2}
+  EnemyView: {fileID: 7336661982418998286, guid: 8a50b9448aa5cf241b42cd5157513c56, type: 3}

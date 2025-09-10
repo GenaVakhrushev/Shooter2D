@@ -44,9 +44,14 @@ namespace Shooter.GameManagement
 
             spawnTokenSource = new CancellationTokenSource();
 
-            while (!spawnTokenSource.IsCancellationRequested && Application.isPlaying)
+            while (!spawnTokenSource.IsCancellationRequested)
             {
                 await Task.Delay((int)(enemiesSpawnParameters.SpawnSecondsInterval * 1000));
+
+                if (!Application.isPlaying)
+                {
+                    return;
+                }
                 
                 spawner.SpawnEnemy(GetRandomConfig());
             }

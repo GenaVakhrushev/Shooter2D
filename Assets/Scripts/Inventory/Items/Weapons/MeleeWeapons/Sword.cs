@@ -2,7 +2,7 @@
 {
     public class Sword : MeleeWeapon
     {
-        public Sword(string name, float damage, float range) : base(name, damage, range)
+        public Sword(string name, float damage, float range, float waveSpeed) : base(name, damage, range, waveSpeed)
         {
         }
     }

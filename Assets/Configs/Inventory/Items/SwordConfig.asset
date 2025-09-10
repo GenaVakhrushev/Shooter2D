@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9f43ce1a9549feae62db3d52e5a1fa, type: 3}
   m_Name: SwordConfig
   m_EditorClassIdentifier: Shooter::Shooter.Inventory.Items.Weapons.MeleeWeapons.SwordConfig
-  ItemName: 
-  ItemView: {fileID: 0}
-  Damage: 0
-  HitDistance: 0
-  Range: 0
+  ItemName: Sword
+  ItemView: {fileID: -8713586271816795499, guid: be2c8701f6bc438419cd2c56487267ae, type: 3}
+  Damage: 1
+  Range: 30
+  WaveSpeed: 540
