@@ -14,7 +14,7 @@ namespace Shooter.Enemies.Spawn
             this.enemiesFactory = enemiesFactory;
         }
 
-        public void SpawnEnemy(EnemyConfig enemyConfig)
+        public EnemyController SpawnEnemy(EnemyConfig enemyConfig)
         {
             var model = new EnemyModel()
             {
@@ -34,6 +34,8 @@ namespace Shooter.Enemies.Spawn
 
             view.transform.position = GetSpawnPosition();
             view.transform.rotation = GetSpawnRotation();
+
+            return controller;
         }
 
         protected abstract Vector3 GetSpawnPosition();

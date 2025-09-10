@@ -4,8 +4,8 @@ using DI.Attributes;
 using Shooter.Enemies;
 using Shooter.Enemies.Spawn;
 using Shooter.Factories;
+using Shooter.Player;
 using Shooter.Services;
-using Shooter.Utils;
 using UnityEngine;
 
 namespace Shooter.GameManagement
@@ -15,6 +15,8 @@ namespace Shooter.GameManagement
         [Inject] private PlayerService playerService;
         [Inject] private EnemiesFactory enemiesFactory;
 
+        private PlayerView playerView;
+        
         private readonly EnemyConfig[] enemyConfigs;
         private readonly SpawnParameters enemiesSpawnParameters;
 
@@ -29,7 +31,7 @@ namespace Shooter.GameManagement
 
         public void StartGame()
         {
-            playerService.SpawnPlayerView();
+            playerView = playerService.SpawnPlayerView();
             spawner = new OffScreenEnemySpawner(enemiesFactory, 2, 2);
             
             StartSpawn();
@@ -39,7 +41,7 @@ namespace Shooter.GameManagement
         {
             for (var i = 0; i < enemiesSpawnParameters.StartSpawnCount; i++)
             {
-                spawner.SpawnEnemy(GetRandomConfig());
+                SpawnEnemy();
             }
 
             spawnTokenSource = new CancellationTokenSource();
@@ -52,11 +54,18 @@ namespace Shooter.GameManagement
                 {
                     return;
                 }
-                
-                spawner.SpawnEnemy(GetRandomConfig());
+
+                SpawnEnemy();
             }
         }
 
+        private void SpawnEnemy()
+        {
+            var enemyController = spawner.SpawnEnemy(GetRandomConfig());
+                
+            enemyController.SetAttackTarget(playerView.transform);
+        }
+        
         private EnemyConfig GetRandomConfig() => enemyConfigs[Random.Range(0, enemyConfigs.Length)];
     }
 }

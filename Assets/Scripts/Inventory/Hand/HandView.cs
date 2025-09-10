@@ -26,11 +26,17 @@ namespace Shooter.Inventory.Hand
             
             if (model != null)
             {
+                SetItem(model.HeldItem);
                 model.ItemChanged += ModelOnItemChanged;
             }
         }
 
         private void ModelOnItemChanged(Item item)
+        {
+            SetItem(item);
+        }
+
+        private void SetItem(Item item)
         {
             if (currentItemView != null)
             {
