@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Shooter.Inventory.Items.Weapons;
+using UnityEngine;
 
 namespace Shooter.Inventory.Items
 {

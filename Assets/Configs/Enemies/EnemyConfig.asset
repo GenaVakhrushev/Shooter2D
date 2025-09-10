@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b129df7d19d346f8b92319706dfdfb88, type: 3}
+  m_Name: EnemyConfig
+  m_EditorClassIdentifier: Shooter::Shooter.Enemies.EnemyConfig
+  EnemyName: 
+  MoveSpeed: 0
+  RotationSpeed: 0
+  AttackDistance: 0
+  AttackLookAngle: 0
+  AttacksPerSecond: 0
+  WeaponConfig: {fileID: 0}
+  EnemyView: {fileID: 0}

@@ -21,16 +21,16 @@ namespace Shooter.Utils
 
         public static bool InScreenArea(Vector2 point)
         {
-            var resolution = new Vector2(Screen.width, Screen.height);
-            var min = MainCamera.ScreenToWorldPoint(Vector3.zero);
-            var max = MainCamera.ScreenToWorldPoint(resolution);
             var screenWorldRect = new Rect()
             {
-                min = min,
-                max = max,
+                min = GetMin(),
+                max = GetMax(),
             };
 
             return screenWorldRect.Contains(point);
         }
+        
+        public static Vector2 GetMin() => MainCamera.ScreenToWorldPoint(Vector3.zero);
+        public static Vector2 GetMax() => MainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
     }
 }

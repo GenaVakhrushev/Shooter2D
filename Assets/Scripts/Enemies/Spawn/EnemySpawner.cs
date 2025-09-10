@@ -1,28 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using DI.Attributes;
-using Shooter.Controllers;
+﻿using DI.Attributes;
 using Shooter.Factories;
+using Shooter.Inventory.Items.Weapons;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Shooter.Enemies.Spawn
 {
-    public class EnemySpawner : MonoBehaviour
+    public abstract class EnemySpawner
     {
-        [SerializeField] private EnemyConfig[] enemyConfigs;
+        private readonly EnemiesFactory enemiesFactory;
 
-        [Inject] private ItemsFactory viewsFactory;
-
-        private Stack<IController> freeControllers = new();
-        private Stack<IController> usingControllers = new();
-        
-        public void SpawnEnemy()
+        protected EnemySpawner(EnemiesFactory enemiesFactory)
         {
-            // var configIndex = Random.Range(0, enemyConfigs.Length);
-            // var config = enemyConfigs[configIndex];
-            // var view = viewsFactory.GetItemView(config);
-            // var controller = (IController)Activator.CreateInstance(config.GetControllerType());
+            this.enemiesFactory = enemiesFactory;
         }
+
+        public void SpawnEnemy(EnemyConfig enemyConfig)
+        {
+            var model = new EnemyModel()
+            {
+                EnemyName = enemyConfig.EnemyName,
+                MoveSpeed = enemyConfig.MoveSpeed,
+                RotationSpeed = enemyConfig.RotationSpeed,
+                AttackDistance = enemyConfig.AttackDistance,
+                AttackLookAngle = enemyConfig.AttackLookAngle,
+                AttacksPerSecond = enemyConfig.AttacksPerSecond,
+                Weapon = (Weapon)enemyConfig.WeaponConfig.CreateItem(),
+            };
+            var view = enemiesFactory.GetEnemyView(model);
+            var controller = new EnemyController();
+            
+            controller.SetModel(model);
+            controller.SetView(view);
+
+            view.transform.position = GetSpawnPosition();
+            view.transform.rotation = GetSpawnRotation();
+        }
+
+        protected abstract Vector3 GetSpawnPosition();
+        protected abstract Quaternion GetSpawnRotation();
     }
 }

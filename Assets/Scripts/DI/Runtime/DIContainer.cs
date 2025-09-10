@@ -100,52 +100,68 @@ namespace DI
         public void Inject(object target)
         {
             var type = target.GetType();
-            
-            // Field injection
-            var injectableFields = type.GetFields(Settings.BINDING_FLAGS)
-                .Where(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
 
-            foreach (var injectableField in injectableFields) {
-                if (injectableField.GetValue(target) != null) {
-                    Debug.LogWarning($"Field '{injectableField.Name}' of class '{type.FullName}' is already set.");
-                    continue;
-                }
-                var fieldType = injectableField.FieldType;
-                var resolvedInstance = Resolve(fieldType);
-                if (resolvedInstance == null) {
-                    throw new Exception($"Failed to inject dependency into field '{injectableField.Name}' of class '{type.Name}'.");
-                }
-                
-                injectableField.SetValue(target, resolvedInstance);
-            }
-            
-            // Property injection
-            var injectableProperties = type.GetProperties(Settings.BINDING_FLAGS)
-                .Where(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
-            foreach (var injectableProperty in injectableProperties) {
-                var propertyType = injectableProperty.PropertyType;
-                var resolvedInstance = Resolve(propertyType);
-                if (resolvedInstance == null) {
-                    throw new Exception($"Failed to inject dependency into property '{injectableProperty.Name}' of class '{type.Name}'.");
+            while (type != null)
+            {
+                // Field injection
+                var injectableFields = type.GetFields(Settings.BINDING_FLAGS)
+                    .Where(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
+
+                foreach (var injectableField in injectableFields)
+                {
+                    if (injectableField.GetValue(target) != null)
+                    {
+                        Debug.LogWarning($"Field '{injectableField.Name}' of class '{type.FullName}' is already set.");
+                        continue;
+                    }
+
+                    var fieldType = injectableField.FieldType;
+                    var resolvedInstance = Resolve(fieldType);
+                    if (resolvedInstance == null)
+                    {
+                        throw new Exception(
+                            $"Failed to inject dependency into field '{injectableField.Name}' of class '{type.Name}'.");
+                    }
+
+                    injectableField.SetValue(target, resolvedInstance);
                 }
 
-                injectableProperty.SetValue(target, resolvedInstance);
-            }
-            
-            // Method injection
-            var injectableMethods = type.GetMethods(Settings.BINDING_FLAGS)
-                .Where(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
+                // Property injection
+                var injectableProperties = type.GetProperties(Settings.BINDING_FLAGS)
+                    .Where(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
+                foreach (var injectableProperty in injectableProperties)
+                {
+                    var propertyType = injectableProperty.PropertyType;
+                    var resolvedInstance = Resolve(propertyType);
+                    if (resolvedInstance == null)
+                    {
+                        throw new Exception(
+                            $"Failed to inject dependency into property '{injectableProperty.Name}' of class '{type.Name}'.");
+                    }
 
-            foreach (var injectableMethod in injectableMethods) {
-                var requiredParameters = injectableMethod.GetParameters()
-                    .Select(parameter => parameter.ParameterType)
-                    .ToArray();
-                var resolvedInstances = requiredParameters.Select(Resolve).ToArray();
-                if (resolvedInstances.Any(resolvedInstance => resolvedInstance == null)) {
-                    throw new Exception($"Failed to inject dependencies into method '{injectableMethod.Name}' of class '{type.Name}'.");
+                    injectableProperty.SetValue(target, resolvedInstance);
                 }
-                
-                injectableMethod.Invoke(target, resolvedInstances);
+
+                // Method injection
+                var injectableMethods = type.GetMethods(Settings.BINDING_FLAGS)
+                    .Where(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
+
+                foreach (var injectableMethod in injectableMethods)
+                {
+                    var requiredParameters = injectableMethod.GetParameters()
+                        .Select(parameter => parameter.ParameterType)
+                        .ToArray();
+                    var resolvedInstances = requiredParameters.Select(Resolve).ToArray();
+                    if (resolvedInstances.Any(resolvedInstance => resolvedInstance == null))
+                    {
+                        throw new Exception(
+                            $"Failed to inject dependencies into method '{injectableMethod.Name}' of class '{type.Name}'.");
+                    }
+
+                    injectableMethod.Invoke(target, resolvedInstances);
+                }
+
+                type = type.BaseType;
             }
         }
 

@@ -21,5 +21,20 @@ namespace Shooter.Utils
             var sin = Mathf.Sin(rad);
             return new Vector2(direction.x * cos - direction.y * sin, direction.x * sin + direction.y * cos);
         }
+        
+        public static void LookAt(this Transform transform, Vector2 lookPosition, float rotationSpeed)
+        {
+            var lookDirection = (lookPosition - (Vector2)transform.position).normalized;
+            var rotateClockwise = Vector2.Dot(transform.right, lookDirection) > 0;
+            var rotationAngle = rotationSpeed * Time.deltaTime * (rotateClockwise ? -1 : 1);
+            var angleToLookDirection = Vector2.Angle(transform.up, lookDirection);
+            
+            if (rotationAngle > angleToLookDirection)
+            {
+                rotationAngle = angleToLookDirection;
+            }
+            
+            transform.Rotate(0, 0, rotationAngle);
+        }
     }
 }

@@ -4,14 +4,12 @@ namespace Shooter.Inventory.Items.Weapons.MeleeWeapons
 {
     public abstract class MeleeWeapon : Weapon
     {
-        private float hitDistance;
         private float range;
-
+        
         public event Action Striked;
 
-        protected MeleeWeapon(string name, float damage, float hitDistance, float range) : base(name, damage)
+        protected MeleeWeapon(string name, float damage, float range) : base(name, damage)
         {
-            this.hitDistance = hitDistance;
             this.range = range;
         }
 

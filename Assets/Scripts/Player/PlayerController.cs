@@ -90,18 +90,8 @@ namespace Shooter.Player
         private void HandleLooking()
         {
             var lookPosition = (Vector2)mainCamera.ScreenToWorldPoint(inputActions.Player.Look.ReadValue<Vector2>());
-            var target = View.transform;
-            var lookDirection = (lookPosition - (Vector2)target.position).normalized;
-            var rotateClockwise = Vector2.Dot(target.right, lookDirection) > 0;
-            var rotationAngle = Model.RotationSpeed * Time.deltaTime * (rotateClockwise ? -1 : 1);
-            var angleToLookDirection = Vector2.Angle(target.up, lookDirection);
             
-            if (rotationAngle > angleToLookDirection)
-            {
-                rotationAngle = angleToLookDirection;
-            }
-            
-            target.Rotate(0, 0, rotationAngle);
+            View.transform.LookAt(lookPosition, Model.RotationSpeed);
         }
         
         private void SelectSlot(int index)
