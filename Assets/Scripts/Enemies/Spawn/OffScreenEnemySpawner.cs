@@ -6,11 +6,16 @@ namespace Shooter.Enemies.Spawn
 {
     public class OffScreenEnemySpawner : EnemySpawner
     {
-        private float maxXOffset;
-        private float maxYOffset;
+        private readonly float minXOffset;
+        private readonly float minYOffset;
+        
+        private readonly float maxXOffset;
+        private readonly float maxYOffset;
 
-        public OffScreenEnemySpawner(EnemiesFactory enemiesFactory, float maxXOffset, float maxYOffset) : base(enemiesFactory)
+        public OffScreenEnemySpawner(EnemiesFactory enemiesFactory, float minXOffset, float minYOffset, float maxXOffset, float maxYOffset) : base(enemiesFactory)
         {
+            this.minXOffset = minXOffset;
+            this.minYOffset = minYOffset;
             this.maxXOffset = maxXOffset;
             this.maxYOffset = maxYOffset;
         }
@@ -18,14 +23,13 @@ namespace Shooter.Enemies.Spawn
         protected override Vector3 GetSpawnPosition()
         {
             var angle = Random.Range(0f, 90f) * Mathf.Deg2Rad;
-            var extend = new Vector2(maxXOffset, maxYOffset);
+            var minExtend = new Vector2(minXOffset, minYOffset);
+            var maxExtend = new Vector2(maxXOffset, maxYOffset);
             var screenMin = ScreenArea.GetMin();
             var screenMax = ScreenArea.GetMax();
-            var spawnMin = screenMin - extend; 
-            var spawnMax = screenMax + extend; 
-            var distanceToScreenBorder = GetDistanceToBorder(screenMin, screenMax, angle);
-            var distanceToSpawnBorder = GetDistanceToBorder(spawnMin, spawnMax, angle);
-            var offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * Random.Range(distanceToScreenBorder, distanceToSpawnBorder);
+            var distanceToMinBorder = GetDistanceToBorder(screenMin - minExtend, screenMax + minExtend, angle);
+            var distanceToMaxBorder = GetDistanceToBorder(screenMin - maxExtend, screenMax + maxExtend, angle);
+            var offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * Random.Range(distanceToMinBorder, distanceToMaxBorder);
             var spawnPoint = (screenMax + screenMin) / 2 + offset;
 
             if (Random.value > 0.5f)

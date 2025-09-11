@@ -32,7 +32,7 @@ namespace Shooter.GameManagement
         public void StartGame()
         {
             playerView = playerService.SpawnPlayerView();
-            spawner = new OffScreenEnemySpawner(enemiesFactory, 2, 2);
+            spawner = new OffScreenEnemySpawner(enemiesFactory, 1, 1, 3, 3);
             
             StartSpawn();
         }
