@@ -1,4 +1,4 @@
-﻿using Shooter.Damage.Bullets;
+﻿using Shooter.Bullets;
 
 namespace Shooter.Inventory.Items.Weapons.ShootWeapons
 {

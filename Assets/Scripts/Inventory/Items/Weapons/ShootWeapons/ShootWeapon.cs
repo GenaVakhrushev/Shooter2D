@@ -1,23 +1,20 @@
 ﻿using System;
-using Shooter.Damage.Bullets;
+using Shooter.Bullets;
 
 namespace Shooter.Inventory.Items.Weapons.ShootWeapons
 {
     public abstract class ShootWeapon : Weapon
     {
-        private BulletConfig bulletConfig;
-        private float bulletLaunchSpeed;
+        public BulletConfig BulletConfig { get; private set; }
+        public float BulletLaunchSpeed { get; private set; }
 
         protected ShootWeapon(string name, float damage, BulletConfig bulletConfig, float bulletLaunchSpeed) : base(name, damage)
         {
-            this.bulletConfig = bulletConfig;
-            this.bulletLaunchSpeed = bulletLaunchSpeed;
+            BulletConfig = bulletConfig;
+            BulletLaunchSpeed = bulletLaunchSpeed;
         }
 
         public event Action<float> Shot;
-
-        public BulletConfig GetConfig() => bulletConfig;
-        public float GetBulletLaunchSpeed() => bulletLaunchSpeed;
 
         protected void Shoot(float angle = 0)
         {

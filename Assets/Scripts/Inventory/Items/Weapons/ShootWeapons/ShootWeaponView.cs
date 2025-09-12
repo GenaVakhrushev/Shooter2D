@@ -1,5 +1,5 @@
 ﻿using DI.Attributes;
-using Shooter.Damage.Bullets;
+using Shooter.Bullets;
 using Shooter.Factories;
 using Shooter.Utils;
 using UnityEngine;
@@ -32,16 +32,19 @@ namespace Shooter.Inventory.Items.Weapons.ShootWeapons
 
         private void ShootWeapon_OnShot(float angle)
         {
-            var bulletConfig = shootWeapon.GetConfig();
+            var bulletConfig = shootWeapon.BulletConfig;
             var bullet = new Bullet(bulletConfig.BulletName);
             var bulletView = bulletsFactory.GetBulletView(bullet);
             var direction = ((Vector2)launchPoint.up).Rotate(angle);
-
             var bulletViewTransform = bulletView.transform;
+            
+            bullet.SetDamage(shootWeapon.Damage);
+            
             bulletViewTransform.position = launchPoint.position;
             bulletViewTransform.rotation = launchPoint.rotation;
             
-            bulletView.Launch(direction, shootWeapon.GetBulletLaunchSpeed());
+            bulletView.SetParentView(this);
+            bulletView.Launch(direction, shootWeapon.BulletLaunchSpeed);
         }
     }
 }

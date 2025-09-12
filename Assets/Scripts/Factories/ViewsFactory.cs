@@ -31,7 +31,11 @@ namespace Shooter.Factories
             
             View CreateObjectView() => container.Instantiate(viewPrefabs[key]);
             void ActionOnGetObjectView(View view) => view.gameObject.SetActive(true);
-            void ActionOnReleaseObjectView(View view) => view.gameObject.SetActive(false);
+            void ActionOnReleaseObjectView(View view)
+            {
+                view.SetParentView(null);
+                view.gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Shooter.Damage.Bullets;
+﻿using Shooter.Bullets;
 using Shooter.Databases;
 
 namespace Shooter.Factories

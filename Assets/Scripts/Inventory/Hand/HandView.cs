@@ -50,6 +50,8 @@ namespace Shooter.Inventory.Hand
             }
             
             currentItemView = itemsFactory.GetItemView(item);
+            currentItemView.SetParentView(this);
+            
             var viewTransform = currentItemView.transform;
 
             viewTransform.parent = itemParent;

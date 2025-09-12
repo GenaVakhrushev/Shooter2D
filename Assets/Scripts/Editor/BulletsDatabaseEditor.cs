@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Shooter.Damage.Bullets;
+using Shooter.Bullets;
 using Shooter.Databases;
 using Shooter.Inventory.Items;
 using UnityEditor;

@@ -2,11 +2,11 @@
 {
     public abstract class Weapon : Item
     {
-        private float damage;
+        public float Damage { get; private set; }
 
         protected Weapon(string name, float damage) : base(name)
         {
-            this.damage = damage;
+            Damage = damage;
         }
     }
 }

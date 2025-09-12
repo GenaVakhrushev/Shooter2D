@@ -83,15 +83,7 @@ namespace Shooter.Player
             }
             
             var directionNormalized = (Vector3)action.ReadValue<Vector2>().normalized;
-            var viewTransform = View.transform;
-            var targetPosition = viewTransform.position + directionNormalized * (Model.MoveSpeed * Time.deltaTime);
-            var screenMin = ScreenArea.GetMin();
-            var screenMax = ScreenArea.GetMax();
-
-            targetPosition.x = Mathf.Clamp(targetPosition.x, screenMin.x, screenMax.x);
-            targetPosition.y = Mathf.Clamp(targetPosition.y, screenMin.y, screenMax.y);
-
-            viewTransform.position = targetPosition;
+            View.Move(directionNormalized, Model.MoveSpeed);
         }
 
         private void HandleLooking()
