@@ -40,6 +40,7 @@ namespace Shooter.Player
             handController.SetModel(new HandModel());
 
             EventFunctions.Tick += Update;
+            EventFunctions.FixedTick += FixedUpdate;
             
             inputActions.Inventory.Slot1.performed += Slot1_OnPerformed;
             inputActions.Inventory.Slot2.performed += Slot2_OnPerformed;
@@ -58,8 +59,12 @@ namespace Shooter.Player
 
         private void Update()
         {
-            HandleMovement();
             HandleLooking();
+        }
+        
+        private void FixedUpdate()
+        {
+            HandleMovement();
         }
 
         private void Slot1_OnPerformed(InputAction.CallbackContext context) => SelectSlot(0);
@@ -90,7 +95,7 @@ namespace Shooter.Player
         {
             var lookPosition = (Vector2)mainCamera.ScreenToWorldPoint(inputActions.Player.Look.ReadValue<Vector2>());
             
-            View.transform.LookAt(lookPosition, Model.RotationSpeed);
+            View.LookAt(lookPosition, Model.RotationSpeed);
         }
         
         private void SelectSlot(int index)

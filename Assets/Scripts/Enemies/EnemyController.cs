@@ -11,12 +11,15 @@ namespace Shooter.Enemies
         
         private Transform attackTarget;
         private float lastAttackTime;
+        private bool reachPosition;
+        private bool reachRotation;
 
         public EnemyController()
         {
             handController = new HandController();
             
             EventFunctions.Tick += Update;
+            EventFunctions.FixedTick += FixedUpdate;
         }
 
         public override void SetModel(EnemyModel model)
@@ -44,27 +47,43 @@ namespace Shooter.Enemies
             {
                 return;
             }
+
+            var viewTransform = View.transform;
+            var targetPosition = attackTarget.position;
+            var toTarget = targetPosition - viewTransform.position;
+            var attackCooldownPassed = Time.time >= lastAttackTime + 1f / Model.AttacksPerSecond;
+            reachRotation = Vector2.Angle(toTarget, viewTransform.up) <= Model.AttackLookAngle;
+
+            if (reachPosition && reachRotation && attackCooldownPassed)
+            {
+                handController.UseItem();
+                lastAttackTime = Time.time;
+            }
+            
+            if (!reachRotation)
+            {
+                View.LookAt(attackTarget.position, Model.RotationSpeed);
+            }
+        }
+        
+        private void FixedUpdate()
+        {
+            if (attackTarget == null || View == null || Model == null)
+            {
+                return;
+            }
             
             var viewTransform = View.transform;
             var targetPosition = attackTarget.position;
             var toTarget = targetPosition - viewTransform.position;
 
-            if (toTarget.sqrMagnitude <= Model.AttackDistance && Vector2.Angle(toTarget, viewTransform.up) <= Model.AttackLookAngle)
-            {
-                if (Time.time >= lastAttackTime + 1f / Model.AttacksPerSecond)
-                {
-                    handController.UseItem();
-                    lastAttackTime = Time.time;
-                }
-            }
-            else
-            {
-                //Movement
-                var moveDirection = toTarget.normalized;
-                viewTransform.position += moveDirection * (Model.MoveSpeed * Time.deltaTime);
+            reachPosition = toTarget.sqrMagnitude <= Model.AttackDistance * Model.AttackDistance;
             
-                //Rotation
-                viewTransform.LookAt(targetPosition, Model.RotationSpeed);
+            if (!reachPosition)
+            {
+                var moveDirection = toTarget.normalized;
+                
+                View.Move(moveDirection, Model.MoveSpeed);
             }
         }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   EnemyName: Melee
   MoveSpeed: 1.5
   RotationSpeed: 360
-  AttackDistance: 0.5
+  AttackDistance: 0.75
   AttackLookAngle: 30
   AttacksPerSecond: 1
   WeaponConfig: {fileID: 11400000, guid: b2793f7731ef44c4f94f38cae81ec435, type: 2}

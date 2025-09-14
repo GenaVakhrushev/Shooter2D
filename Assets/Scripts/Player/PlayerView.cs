@@ -18,6 +18,7 @@ namespace Shooter.Player
             base.Awake();
             
             rb = GetComponent<Rigidbody2D>();
+            rb.gravityScale = 0;
         }
 
         public void TakeDamage(float damage)
@@ -28,14 +29,12 @@ namespace Shooter.Player
 
         public void Move(Vector2 direction, float speed)
         {
-            var targetPosition = (Vector2)transform.position + direction * (speed * Time.fixedDeltaTime);
-            var screenMin = ScreenArea.GetMin();
-            var screenMax = ScreenArea.GetMax();
-            
-            targetPosition.x = Mathf.Clamp(targetPosition.x, screenMin.x, screenMax.x);
-            targetPosition.y = Mathf.Clamp(targetPosition.y, screenMin.y, screenMax.y);
-            
-            rb.MovePosition(targetPosition);
+            rb.MoveInScreen(direction, speed);
+        }
+
+        public void LookAt(Vector2 position, float speed)
+        {
+            transform.LookAt(position, speed);
         }
     }
 }

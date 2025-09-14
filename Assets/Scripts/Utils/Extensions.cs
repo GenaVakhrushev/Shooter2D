@@ -36,5 +36,17 @@ namespace Shooter.Utils
             
             transform.Rotate(0, 0, rotationAngle);
         }
+
+        public static void MoveInScreen(this Rigidbody2D rb, Vector2 direction, float speed)
+        {
+            var targetPosition = rb.position + direction * (speed * Time.fixedDeltaTime);
+            var screenMin = ScreenArea.GetMin();
+            var screenMax = ScreenArea.GetMax();
+            
+            targetPosition.x = Mathf.Clamp(targetPosition.x, screenMin.x, screenMax.x);
+            targetPosition.y = Mathf.Clamp(targetPosition.y, screenMin.y, screenMax.y);
+            
+            rb.MovePosition(targetPosition);
+        }
     }
 }
