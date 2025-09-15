@@ -1,4 +1,5 @@
 ﻿using Shooter.Factories;
+using Shooter.Services;
 using Shooter.Utils;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace Shooter.Enemies.Spawn
         private readonly float maxXOffset;
         private readonly float maxYOffset;
 
-        public OffScreenEnemySpawner(EnemiesFactory enemiesFactory, float minXOffset, float minYOffset, float maxXOffset, float maxYOffset) : base(enemiesFactory)
+        public OffScreenEnemySpawner(EnemiesFactory enemiesFactory, EnemiesService enemiesService, float minXOffset, float minYOffset, float maxXOffset, float maxYOffset) : base(enemiesFactory, enemiesService)
         {
             this.minXOffset = minXOffset;
             this.minYOffset = minYOffset;

@@ -1,4 +1,6 @@
-﻿using Shooter.Controllers;
+﻿using System;
+using Shooter.Controllers;
+using Shooter.HP;
 using Shooter.Inventory.Hand;
 using Shooter.Utils;
 using UnityEngine;
@@ -8,18 +10,34 @@ namespace Shooter.Enemies
     public class EnemyController : Controller<EnemyModel, EnemyView>
     {
         private readonly HandController handController;
+        private readonly HPController hpController;
         
         private Transform attackTarget;
         private float lastAttackTime;
         private bool reachPosition;
         private bool reachRotation;
 
+        public event Action EnemyDied;
+
         public EnemyController()
         {
             handController = new HandController();
             
+            hpController = new HPController();
+            hpController.LostHP += HpControllerOnLostHP;
+            
             EventFunctions.Tick += Update;
             EventFunctions.FixedTick += FixedUpdate;
+        }
+
+        private void HpControllerOnLostHP()
+        {
+            if (View)
+            {
+                View.Die();
+            }
+
+            EnemyDied?.Invoke();
         }
 
         public override void SetModel(EnemyModel model)
@@ -28,17 +46,43 @@ namespace Shooter.Enemies
 
             lastAttackTime = 0;
 
-            var handModel = new HandModel();
-            
-            handModel.SetItem(Model.Weapon);
-            handController.SetModel(handModel);
+            if (Model != null)
+            {
+                var handModel = new HandModel();
+
+                handModel.SetItem(Model.Weapon);
+                handController.SetModel(handModel);
+
+                hpController.SetModel(Model.HPModel);
+            }
+            else
+            {
+                handController.SetModel(null);
+                hpController.SetModel(null);
+            }
         }
 
         public override void SetView(EnemyView view)
         {
-            base.SetView(view);
+            if (View != null)
+            {
+                View.DamageTaken -= ViewOnDamageTaken;
+            }
             
-            handController.SetView(view.GetComponentInChildren<HandView>());
+            base.SetView(view);
+
+            if (View != null)
+            {
+                handController.SetView(View.GetComponentInChildren<HandView>());
+                hpController.SetView(View.GetComponentInChildren<HPView>());
+
+                View.DamageTaken += ViewOnDamageTaken;
+            }
+            else
+            {
+                handController.SetView(null);
+                hpController.SetView(null);
+            }
         }
 
         private void Update()
@@ -65,7 +109,7 @@ namespace Shooter.Enemies
                 View.LookAt(attackTarget.position, Model.RotationSpeed);
             }
         }
-        
+
         private void FixedUpdate()
         {
             if (attackTarget == null || View == null || Model == null)
@@ -85,6 +129,11 @@ namespace Shooter.Enemies
                 
                 View.Move(moveDirection, Model.MoveSpeed);
             }
+        }
+
+        private void ViewOnDamageTaken(float damage)
+        {
+            hpController.RemoveHP(damage);
         }
 
         public void SetAttackTarget(Transform target)

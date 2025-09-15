@@ -1,4 +1,5 @@
-﻿using Shooter.Inventory.Items.Weapons;
+﻿using Shooter.HP;
+using Shooter.Inventory.Items.Weapons;
 using UnityEngine;
 
 namespace Shooter.Enemies
@@ -12,6 +13,7 @@ namespace Shooter.Enemies
         public float AttackDistance;
         public float AttackLookAngle;
         public float AttacksPerSecond;
+        public HPConfig HPConfig;
         public WeaponConfig WeaponConfig;
         public EnemyView EnemyView;
     }

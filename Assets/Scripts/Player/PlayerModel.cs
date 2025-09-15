@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Shooter.HP;
 
 namespace Shooter.Player
 {
-    [Serializable]
     public class PlayerModel
     {
         public float MoveSpeed;
         public float RotationSpeed;
+        public HPModel HPModel;
     }
 }

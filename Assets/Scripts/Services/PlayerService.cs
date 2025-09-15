@@ -1,5 +1,6 @@
 ﻿using DI;
 using DI.Attributes;
+using Shooter.HP;
 using Shooter.Player;
 using UnityEngine;
 
@@ -29,10 +30,16 @@ namespace Shooter.Services
         public PlayerView SpawnPlayerView()
         {
             var view = container.Instantiate(ViewPrefab);
+            var model = new PlayerModel
+            {
+                MoveSpeed = config.MoveSpeed,
+                RotationSpeed = config.RotationSpeed,
+                HPModel = new HPModel(config.HPConfig.InitialHP, config.HPConfig.MaxHP),
+            };
             var controller = new PlayerController(inputActions, config.InventoryConfig);
             
             controller.SetView(view);
-            controller.SetModel(config.PlayerModel);
+            controller.SetModel(model);
 
             var viewTransform = view.transform;
             viewTransform.position = spawnPoint.position;

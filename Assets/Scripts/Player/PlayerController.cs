@@ -1,4 +1,5 @@
 ﻿using Shooter.Controllers;
+using Shooter.HP;
 using Shooter.Inventory.Core;
 using Shooter.Inventory.Hand;
 using Shooter.Inventory.Slots;
@@ -15,6 +16,7 @@ namespace Shooter.Player
      
         private readonly InventoryController inventoryController;
         private readonly HandController handController;
+        private readonly HPController hpController;
         
         public PlayerController(ShooterInputActions inputActions, InventoryConfig inventoryConfig)
         {
@@ -39,6 +41,8 @@ namespace Shooter.Player
             handController = new HandController();
             handController.SetModel(new HandModel());
 
+            hpController = new HPController();
+
             EventFunctions.Tick += Update;
             EventFunctions.FixedTick += FixedUpdate;
             
@@ -51,10 +55,30 @@ namespace Shooter.Player
 
         public override void SetView(PlayerView view)
         {
+            if (View != null)
+            {
+                View.DamageTaken -= ViewOnDamageTaken;
+            }
+            
             base.SetView(view);
             
             inventoryController.SetView(View.GetComponentInChildren<InventoryView>());
             handController.SetView(View.GetComponentInChildren<HandView>());
+            hpController.SetView(View.GetComponentInChildren<HPView>());
+            
+            View.DamageTaken += ViewOnDamageTaken;
+        }
+
+        public override void SetModel(PlayerModel model)
+        {
+            base.SetModel(model);
+            
+            hpController.SetModel(Model.HPModel);
+        }
+
+        private void ViewOnDamageTaken(float damage)
+        {
+            hpController.RemoveHP(damage);
         }
 
         private void Update()

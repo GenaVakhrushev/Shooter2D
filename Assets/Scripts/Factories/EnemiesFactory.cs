@@ -5,9 +5,9 @@ namespace Shooter.Factories
 {
     public class EnemiesFactory : ViewsFactory
     {
-        public EnemiesFactory(EnemiesDatabase bulletsDatabase)
+        public EnemiesFactory(EnemiesDatabase enemiesDatabase)
         {
-            foreach (var enemyConfig in bulletsDatabase.EnemyConfigs)
+            foreach (var enemyConfig in enemiesDatabase.EnemyConfigs)
             {
                 AddViewPrefab(enemyConfig.EnemyName, enemyConfig.EnemyView);
             }

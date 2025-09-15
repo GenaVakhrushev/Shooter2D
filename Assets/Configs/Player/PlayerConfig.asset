@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0f597c0f094397910992cb838b7527, type: 3}
   m_Name: PlayerConfig
   m_EditorClassIdentifier: Shooter::Shooter.Configs.PlayerConfig
-  PlayerModel:
-    MoveSpeed: 3
-    RotationSpeed: 360
+  MoveSpeed: 3
+  RotationSpeed: 360
+  HPConfig: {fileID: 11400000, guid: 920b4bb6f47c94f4fbf7d67af7e1620b, type: 2}
   InventoryConfig: {fileID: 11400000, guid: c799543dc96c11e4081ef97fd52e1e0d, type: 2}

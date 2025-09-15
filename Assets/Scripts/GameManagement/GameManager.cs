@@ -14,6 +14,7 @@ namespace Shooter.GameManagement
     {
         [Inject] private PlayerService playerService;
         [Inject] private EnemiesFactory enemiesFactory;
+        [Inject] private EnemiesService enemiesService;
 
         private PlayerView playerView;
         
@@ -32,7 +33,7 @@ namespace Shooter.GameManagement
         public void StartGame()
         {
             playerView = playerService.SpawnPlayerView();
-            spawner = new OffScreenEnemySpawner(enemiesFactory, 1, 1, 3, 3);
+            spawner = new OffScreenEnemySpawner(enemiesFactory, enemiesService, 1, 1, 3, 3);
             
             StartSpawn();
         }
