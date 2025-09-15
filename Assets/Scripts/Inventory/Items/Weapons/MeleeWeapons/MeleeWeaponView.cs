@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using DI.Attributes;
+using Shooter.Damage;
+using UnityEngine;
 
 namespace Shooter.Inventory.Items.Weapons.MeleeWeapons
 {
-    public class MeleeWeaponView : ItemView
+    public class MeleeWeaponView : ItemView, IDamageDealer
     {
+        [Inject] private DamageCalculator damageCalculator;
+        
         private MeleeWeapon meleeWeapon;
         private Position currentPosition;
 
@@ -16,6 +20,19 @@ namespace Shooter.Inventory.Items.Weapons.MeleeWeapons
             
             var targetAngle = currentPosition == Position.Right ? -meleeWeapon.Range : meleeWeapon.Range;
             transform.localRotation = Quaternion.RotateTowards(transform.localRotation, Quaternion.Euler(0, 0, targetAngle), meleeWeapon.WaveSpeed * Time.deltaTime);
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.TryGetComponent(out IDamageable damageable))
+            {
+                var damage = damageCalculator.CalculateDamage(this, damageable);
+
+                if (damage > 0)
+                {
+                    damageable.TakeDamage(damage);
+                }
+            }
         }
 
         public override void SetItem(Item item)
@@ -45,5 +62,7 @@ namespace Shooter.Inventory.Items.Weapons.MeleeWeapons
             Left = 0,
             Right = 1,
         }
+
+        public float GetDamage() => meleeWeapon.Damage;
     }
 }
