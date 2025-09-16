@@ -17,7 +17,7 @@ namespace Shooter.Enemies
         private bool reachPosition;
         private bool reachRotation;
 
-        public event Action EnemyDied;
+        public event Action<EnemyController> EnemyDied;
 
         public EnemyController()
         {
@@ -32,12 +32,7 @@ namespace Shooter.Enemies
 
         private void HpControllerOnLostHP()
         {
-            if (View)
-            {
-                View.Die();
-            }
-
-            EnemyDied?.Invoke();
+            Die();
         }
 
         public override void SetModel(EnemyModel model)
@@ -83,6 +78,16 @@ namespace Shooter.Enemies
                 handController.SetView(null);
                 hpController.SetView(null);
             }
+        }
+
+        public void Die()
+        {
+            if (View)
+            {
+                View.Die();
+            }
+
+            EnemyDied?.Invoke(this);
         }
 
         private void Update()

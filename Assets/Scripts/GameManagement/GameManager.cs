@@ -1,28 +1,30 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DI.Attributes;
 using Shooter.Enemies;
 using Shooter.Enemies.Spawn;
 using Shooter.Factories;
-using Shooter.Player;
 using Shooter.Services;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Shooter.GameManagement
 {
     public class GameManager
     {
+        [Inject] private ShooterInputActions inputActions;
         [Inject] private PlayerService playerService;
         [Inject] private EnemiesFactory enemiesFactory;
         [Inject] private EnemiesService enemiesService;
-
-        private PlayerView playerView;
         
         private readonly EnemyConfig[] enemyConfigs;
         private readonly SpawnParameters enemiesSpawnParameters;
 
         private OffScreenEnemySpawner spawner;
         private CancellationTokenSource spawnTokenSource;
+        
+        public event Action GameLost;
 
         public GameManager(EnemyConfig[] enemyConfigs, SpawnParameters enemiesSpawnParameters)
         {
@@ -30,12 +32,25 @@ namespace Shooter.GameManagement
             this.enemiesSpawnParameters = enemiesSpawnParameters;
         }
 
+        [Inject]
+        private void Initialize()
+        {
+            playerService.PlayerDied += PlayerServiceOnPlayerDied;
+        }
+
         public void StartGame()
         {
-            playerView = playerService.SpawnPlayerView();
+            playerService.CreatePlayer();
             spawner = new OffScreenEnemySpawner(enemiesFactory, enemiesService, 1, 1, 3, 3);
+            inputActions.Enable();
             
             StartSpawn();
+        }
+
+        public void Restart()
+        {
+            enemiesService.KillAll();
+            StartGame();
         }
 
         private async void StartSpawn()
@@ -47,11 +62,11 @@ namespace Shooter.GameManagement
 
             spawnTokenSource = new CancellationTokenSource();
 
-            while (!spawnTokenSource.IsCancellationRequested)
+            while (true)
             {
                 await Task.Delay((int)(enemiesSpawnParameters.SpawnSecondsInterval * 1000));
 
-                if (!Application.isPlaying)
+                if (!Application.isPlaying || spawnTokenSource.IsCancellationRequested)
                 {
                     return;
                 }
@@ -60,13 +75,33 @@ namespace Shooter.GameManagement
             }
         }
 
+        private void PlayerServiceOnPlayerDied()
+        {
+            LoseGame();
+        }
+
+        private void LoseGame()
+        {
+            StopSpawn();
+            
+            enemiesService.StopEnemies();
+            inputActions.Disable();
+            
+            GameLost?.Invoke();
+        }
+
+        private void StopSpawn()
+        {
+            spawnTokenSource.Cancel(false);
+        }
+
         private void SpawnEnemy()
         {
             var enemyController = spawner.SpawnEnemy(GetRandomConfig());
-                
-            enemyController.SetAttackTarget(playerView.transform);
+            
+            enemyController.SetAttackTarget(playerService.CurrentView.transform);
         }
-        
+
         private EnemyConfig GetRandomConfig() => enemyConfigs[Random.Range(0, enemyConfigs.Length)];
     }
 }

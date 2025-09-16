@@ -23,7 +23,6 @@ namespace Shooter.Player
 
         public void TakeDamage(float damage)
         {
-            Debug.Log($"{name} take {damage} damage");
             DamageTaken?.Invoke(damage);
         }
 

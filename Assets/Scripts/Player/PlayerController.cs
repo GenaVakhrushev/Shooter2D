@@ -1,4 +1,5 @@
-﻿using Shooter.Controllers;
+﻿using System;
+using Shooter.Controllers;
 using Shooter.HP;
 using Shooter.Inventory.Core;
 using Shooter.Inventory.Hand;
@@ -17,6 +18,8 @@ namespace Shooter.Player
         private readonly InventoryController inventoryController;
         private readonly HandController handController;
         private readonly HPController hpController;
+
+        public event Action Died;
         
         public PlayerController(ShooterInputActions inputActions, InventoryConfig inventoryConfig)
         {
@@ -42,6 +45,7 @@ namespace Shooter.Player
             handController.SetModel(new HandModel());
 
             hpController = new HPController();
+            hpController.LostHP += HpControllerOnLostHP;
 
             EventFunctions.Tick += Update;
             EventFunctions.FixedTick += FixedUpdate;
@@ -74,6 +78,11 @@ namespace Shooter.Player
             base.SetModel(model);
             
             hpController.SetModel(Model.HPModel);
+        }
+
+        private void HpControllerOnLostHP()
+        {
+            Died?.Invoke();
         }
 
         private void ViewOnDamageTaken(float damage)
